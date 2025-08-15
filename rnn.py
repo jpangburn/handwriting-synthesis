@@ -154,7 +154,8 @@ class rnn(TFBaseModel):
             sequence_length=self.x_prime_len,
             dtype=tf.float32,
             initial_state=initial_state,
-            scope='rnn'
+            scope='rnn',
+            swap_memory=True
         )[1]
         return rnn_free_run(
             cell=cell,
@@ -193,7 +194,8 @@ class rnn(TFBaseModel):
             sequence_length=self.x_len,
             dtype=tf.float32,
             initial_state=self.initial_state,
-            scope='rnn'
+            scope='rnn',
+            swap_memory=True
         )
         params = time_distributed_dense_layer(outputs, self.output_units, scope='rnn/gmm')
         pis, mus, sigmas, rhos, es = self.parse_parameters(params)

@@ -107,7 +107,9 @@ class TFBaseModel(object):
         logging.info('\nnew run with parameters:\n{}'.format(pp.pformat(self.__dict__)))
 
         self.graph = self.build_graph()
-        self.session = tf.Session(graph=self.graph)
+        config = tf.ConfigProto()
+        config.gpu_options.allow_growth = True
+        self.session = tf.Session(graph=self.graph, config=config)
         logging.info('built graph')
 
     def update_train_params(self):
@@ -161,7 +163,7 @@ class TFBaseModel(object):
                     val_feed_dict.update({self.is_training: False})
 
                 results = self.session.run(
-                    fetches=[self.loss] + self.metrics.values(),
+                    fetches=[self.loss] + list(self.metrics.values()),
                     feed_dict=val_feed_dict
                 )
                 val_loss = results[0]
