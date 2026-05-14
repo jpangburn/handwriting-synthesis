@@ -2,7 +2,7 @@ data/raw/ascii
 data/raw/lineStrokes
 data/raw/original
 data/processed
-
+data/
 logs
 predictions
 venv
